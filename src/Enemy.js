@@ -10,9 +10,11 @@ class Enemy {
     }
 
     start() {
-        setInterval(() => {
-            this.aleatoryStrategy();
-            this.update();
+        this.interval = setInterval(() => {
+            if (this.isAlive) {
+                this.aleatoryStrategy();
+                this.update();
+            }
         }, 1000);
     }
 
@@ -44,6 +46,7 @@ class Enemy {
         image(this.img, this.location.x, this.location.y, this.size, this.size);
         if (this.getMazePosition() == 4) {
             this.isAlive = false;
+            clearInterval(this.interval);
             this.pos = { x: 0, y: 0 };
         }
     }
