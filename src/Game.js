@@ -11,7 +11,9 @@ class Game {
         this.imgs = {
             block: loadImage('assets/block.bmp'),
             bomb: loadImage('assets/bomb.bmp'),
-            exp_center: loadImage('assets/exp_center.bmp')
+            exp_center: loadImage('assets/exp_center.bmp'),
+            exp_horizontal: loadImage('assets/exp_horizontal.bmp'),
+            exp_vertical: loadImage('assets/exp_vertical.bmp')
         };
         /**
          * 1 = parede
@@ -95,6 +97,22 @@ class Game {
             for (let j = 1; j < this.maze[i].length - 1; j++) {
                 if (this.maze[i][j] == 4) {
                     image(this.imgs.exp_center, this.size * j, this.size * i, this.size, this.size);
+                    if (this.maze[i - 1][j] != 1) {
+                        image(this.imgs.exp_vertical, this.size * j, this.size * (i - 1), this.size, this.size);
+                        this.maze[i - 1][j] = 0;
+                    }
+                    if (this.maze[i + 1][j] != 1) {
+                        image(this.imgs.exp_vertical, this.size * j, this.size * (i + 1), this.size, this.size);
+                        this.maze[i + 1][j] = 0;
+                    }
+                    if (this.maze[i][j + 1] != 1) {
+                        image(this.imgs.exp_horizontal, this.size * (j + 1), this.size * i, this.size, this.size);
+                        this.maze[i][j + 1] = 0;
+                    }
+                    if (this.maze[i][j - 1] != 1) {
+                        image(this.imgs.exp_horizontal, this.size * (j - 1), this.size * i, this.size, this.size);
+                        this.maze[i][j - 1] = 0;
+                    }
                 }
             }
         }
