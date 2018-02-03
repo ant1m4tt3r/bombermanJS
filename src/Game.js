@@ -8,6 +8,7 @@ class Game {
         this.exploding = false;
         this.notAllowed = [1, 2, 3];
         this.bombs = [];
+        this.enemys = [];
         this.imgs = {
             block: loadImage('assets/block.bmp'),
             bomb: loadImage('assets/bomb.bmp'),
@@ -36,6 +37,7 @@ class Game {
             [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
         ];
+        this.createEnemys();
     }
 
     isEmptySpace(x, y) {
@@ -44,7 +46,17 @@ class Game {
 
 
     isUsableSpace(x, y) {
-        return !this.notAllowed.includes(this.maze[y][x]);
+        try {
+            return !this.notAllowed.includes(this.maze[y][x]);
+        } catch (err) {
+            return false;
+        }
+    }
+
+    createEnemys() {
+        this.enemys.push(new Enemy(this, 5, 9));
+        this.enemys.push(new Enemy(this, 11, 11));
+        this.enemys.push(new Enemy(this, 6, 3));
     }
 
     moveBomberman(direction) {
@@ -58,8 +70,12 @@ class Game {
     explosion(bomb) {
         this.maze[bomb.y][bomb.x] = 4;
         this.exploding = true;
+        let interval = setInterval(() => {
+            this.drawExplosions(bomb.x, bomb.y);
+        }, 10);
         setTimeout(() => {
             this.exploding = false;
+            clearInterval(interval);
         }, 2000);
     }
 
@@ -68,6 +84,11 @@ class Game {
             this.bombs.push(new Bomb(this.bomberman.pos, this));
             this.maze[this.bomberman.pos.y][this.bomberman.pos.x] = 3;
         }
+    }
+
+    verify() {
+        if (![0, 3].includes(this.maze[this.bomberman.pos.y][this.bomberman.pos.x]))
+            console.log('PERDEU');
     }
 
     drawBlocks() {
@@ -92,43 +113,44 @@ class Game {
 
     }
 
-    drawExplosions() {
-        for (let i = 1; i < this.maze.length - 1; i++) {
-            for (let j = 1; j < this.maze[i].length - 1; j++) {
-                if (this.maze[i][j] == 4) {
-                    image(this.imgs.exp_center, this.size * j, this.size * i, this.size, this.size);
-                    if (this.maze[i - 1][j] != 1) {
-                        image(this.imgs.exp_vertical, this.size * j, this.size * (i - 1), this.size, this.size);
-                        this.maze[i - 1][j] = 0;
-                    }
-                    if (this.maze[i + 1][j] != 1) {
-                        image(this.imgs.exp_vertical, this.size * j, this.size * (i + 1), this.size, this.size);
-                        this.maze[i + 1][j] = 0;
-                    }
-                    if (this.maze[i][j + 1] != 1) {
-                        image(this.imgs.exp_horizontal, this.size * (j + 1), this.size * i, this.size, this.size);
-                        this.maze[i][j + 1] = 0;
-                    }
-                    if (this.maze[i][j - 1] != 1) {
-                        image(this.imgs.exp_horizontal, this.size * (j - 1), this.size * i, this.size, this.size);
-                        this.maze[i][j - 1] = 0;
-                    }
-                }
+    drawExplosions(x, y) {
+        if (this.maze[y][x] == 4) {
+            image(this.imgs.exp_center, this.size * x, this.size * y, this.size, this.size);
+            if (this.maze[y - 1][x] != 1) {
+                image(this.imgs.exp_vertical, this.size * x, this.size * (y - 1), this.size, this.size);
+                this.maze[y - 1][x] = 4;
+            }
+            if (this.maze[y + 1][x] != 1) {
+                image(this.imgs.exp_vertical, this.size * x, this.size * (y + 1), this.size, this.size);
+                this.maze[y + 1][x] = 4;
+            }
+            if (this.maze[y][x + 1] != 1) {
+                image(this.imgs.exp_horizontal, this.size * (x + 1), this.size * y, this.size, this.size);
+                this.maze[y][x + 1] = 4;
+            }
+            if (this.maze[y][x - 1] != 1) {
+                image(this.imgs.exp_horizontal, this.size * (x - 1), this.size * y, this.size, this.size);
+                this.maze[y][x - 1] = 4;
             }
         }
     }
 
-    verify() {
-        if (![0, 3].includes(this.maze[this.bomberman.pos.y][this.bomberman.pos.x]))
-            console.log('PERDEU');
+    drawEnemys() {
+        for (let i = this.enemys.length - 1; i >= 0; i--) {
+            if (this.enemys[i].isAlive)
+                this.enemys[i].draw();
+            if (this.enemys[i].pos.x == this.bomberman.pos.x &&
+                this.enemys[i].pos.y == this.bomberman.pos.y) {
+                console.log('PERDEU');
+            }
+        }
     }
 
     draw() {
         image(this.img, 0, 0, this.size * this.grid.width, this.size * this.grid.height);
         this.drawBlocks();
         this.drawBombs();
-        if (this.exploding)
-            this.drawExplosions();
+        this.drawEnemys();
         this.verify();
         this.bomberman.draw();
     }

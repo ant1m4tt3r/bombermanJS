@@ -6,7 +6,7 @@ const BLOCK_SIZE = 40;
 const GAME_WIDTH = HORIZONTAL_BLOCKS * BLOCK_SIZE;
 const GAME_HEIGHT = VERTICAL_BLOCKS * BLOCK_SIZE;
 
-const fr = 8;
+const fr = 10;
 
 let game;
 
@@ -23,16 +23,26 @@ function draw() {
 
 function commands() {
     if (game) {
-        if (keyIsDown(LEFT_ARROW))
+        if (keyIsDown(LEFT_ARROW)) {
             game.moveBomberman(getDirection(LEFT_ARROW));
-        if (keyIsDown(RIGHT_ARROW))
+            return;
+        }
+        if (keyIsDown(RIGHT_ARROW)) {
             game.moveBomberman(getDirection(RIGHT_ARROW));
-        if (keyIsDown(UP_ARROW))
+            return;
+        }
+        if (keyIsDown(UP_ARROW)) {
             game.moveBomberman(getDirection(UP_ARROW));
-        if (keyIsDown(DOWN_ARROW))
+            return;
+        }
+        if (keyIsDown(DOWN_ARROW)) {
             game.moveBomberman(getDirection(DOWN_ARROW));
-        if (keyIsDown(32))
+            return;
+        }
+        if (keyIsDown(32)) {
             game.putBomb();
+            return;
+        }
     }
 }
 
