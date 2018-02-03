@@ -3,6 +3,7 @@ body {
     padding: 0;
     margin: 0;
     font-family: 'Press Start 2P', cursive;
+    background-color: #a6a6a9;
 }
 
 canvas {

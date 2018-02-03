@@ -18,7 +18,9 @@ function setup() {
 
 function draw() {
     game.draw();
-    commands();
+    if (!game.finish) {
+        commands();
+    }
 }
 
 function commands() {

@@ -1,6 +1,8 @@
 class Game {
 
     constructor() {
+        this.gameState = 'running';
+        this.finish = false;
         this.img = loadImage('assets/background.bmp');
         this.grid = { width: 17, height: 13 }
         this.size = 40;
@@ -14,7 +16,9 @@ class Game {
             bomb: loadImage('assets/bomb.bmp'),
             exp_center: loadImage('assets/exp_center.bmp'),
             exp_horizontal: loadImage('assets/exp_horizontal.bmp'),
-            exp_vertical: loadImage('assets/exp_vertical.bmp')
+            exp_vertical: loadImage('assets/exp_vertical.bmp'),
+            game_over: loadImage('assets/game_over.bmp'),
+            win: loadImage('assets/win.bmp')
         };
         /**
          * 1 = parede
@@ -86,9 +90,11 @@ class Game {
         }
     }
 
-    verify() {
+    verify(enemysDead) {
+        if (enemysDead)
+            this.finishGame('win');
         if (![0, 3].includes(this.maze[this.bomberman.pos.y][this.bomberman.pos.x]))
-            console.log('PERDEU');
+            this.finishGame('dead');
     }
 
     drawBlocks() {
@@ -114,45 +120,61 @@ class Game {
     }
 
     drawExplosions(x, y) {
-        if (this.maze[y][x] == 4) {
-            image(this.imgs.exp_center, this.size * x, this.size * y, this.size, this.size);
-            if (this.maze[y - 1][x] != 1) {
-                image(this.imgs.exp_vertical, this.size * x, this.size * (y - 1), this.size, this.size);
-                this.maze[y - 1][x] = 4;
-            }
-            if (this.maze[y + 1][x] != 1) {
-                image(this.imgs.exp_vertical, this.size * x, this.size * (y + 1), this.size, this.size);
-                this.maze[y + 1][x] = 4;
-            }
-            if (this.maze[y][x + 1] != 1) {
-                image(this.imgs.exp_horizontal, this.size * (x + 1), this.size * y, this.size, this.size);
-                this.maze[y][x + 1] = 4;
-            }
-            if (this.maze[y][x - 1] != 1) {
-                image(this.imgs.exp_horizontal, this.size * (x - 1), this.size * y, this.size, this.size);
-                this.maze[y][x - 1] = 4;
+        if (!this.finish) {
+            if (this.maze[y][x] == 4) {
+                image(this.imgs.exp_center, this.size * x, this.size * y, this.size, this.size);
+                if (this.maze[y - 1][x] != 1) {
+                    image(this.imgs.exp_vertical, this.size * x, this.size * (y - 1), this.size, this.size);
+                    this.maze[y - 1][x] = 4;
+                }
+                if (this.maze[y + 1][x] != 1) {
+                    image(this.imgs.exp_vertical, this.size * x, this.size * (y + 1), this.size, this.size);
+                    this.maze[y + 1][x] = 4;
+                }
+                if (this.maze[y][x + 1] != 1) {
+                    image(this.imgs.exp_horizontal, this.size * (x + 1), this.size * y, this.size, this.size);
+                    this.maze[y][x + 1] = 4;
+                }
+                if (this.maze[y][x - 1] != 1) {
+                    image(this.imgs.exp_horizontal, this.size * (x - 1), this.size * y, this.size, this.size);
+                    this.maze[y][x - 1] = 4;
+                }
             }
         }
     }
 
     drawEnemys() {
+        let allDead = true;
         for (let i = this.enemys.length - 1; i >= 0; i--) {
-            if (this.enemys[i].isAlive)
+            if (this.enemys[i].isAlive) {
                 this.enemys[i].draw();
+                allDead = false;
+            }
             if (this.enemys[i].pos.x == this.bomberman.pos.x &&
                 this.enemys[i].pos.y == this.bomberman.pos.y) {
-                console.log('PERDEU');
+                this.finishGame('dead');
+                return false;
             }
         }
+        return allDead;
+    }
+
+    finishGame(state) {
+        this.state = state;
+        this.finish = true;
     }
 
     draw() {
-        image(this.img, 0, 0, this.size * this.grid.width, this.size * this.grid.height);
-        this.drawBlocks();
-        this.drawBombs();
-        this.drawEnemys();
-        this.verify();
-        this.bomberman.draw();
+        if (!this.finish) {
+            image(this.img, 0, 0, this.size * this.grid.width, this.size * this.grid.height);
+            this.drawBlocks();
+            this.drawBombs();
+            let enemysDead = this.drawEnemys();
+            this.verify(enemysDead);
+            this.bomberman.draw();
+        } else {
+            image(this.state === 'win' ? this.imgs.win : this.imgs.game_over, 0, 0, this.size * this.grid.width, this.size * this.grid.height);
+        }
     }
 
 }
