@@ -29,3 +29,56 @@ h1 {
     left: 0;
     right: 0;
 }
+
+#controls {
+    text-align: center;
+    position: absolute;
+    bottom: 50%;
+    margin: auto;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 150px;
+}
+
+#controls>div {
+    width: 100%;
+    height: 110px;
+}
+
+button {
+    width: 90px;
+    height: 90px;
+    margin: 10px 40px;
+    position: absolute;
+}
+
+#up,
+#down {
+    left: 20%;
+}
+
+#left {
+    left: 10%;
+}
+
+#right {
+    left: 30%;
+}
+
+#bomb {
+    right: 10%;
+    width: 200px;
+}
+
+
+/* 
+  ##Device = Laptops, Desktops
+  ##Screen = B/w 1025px to 1280px
+*/
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+    #controls {
+        display: none;
+    }
+}

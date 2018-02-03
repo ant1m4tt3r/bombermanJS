@@ -23,25 +23,25 @@ function draw() {
     }
 }
 
-function commands() {
+function commands(touch) {
     if (game) {
-        if (keyIsDown(LEFT_ARROW)) {
+        if (keyIsDown(LEFT_ARROW) || touch == 'left') {
             game.moveBomberman(getDirection(LEFT_ARROW));
             return;
         }
-        if (keyIsDown(RIGHT_ARROW)) {
+        if (keyIsDown(RIGHT_ARROW) || touch == 'right') {
             game.moveBomberman(getDirection(RIGHT_ARROW));
             return;
         }
-        if (keyIsDown(UP_ARROW)) {
+        if (keyIsDown(UP_ARROW) || touch == 'up') {
             game.moveBomberman(getDirection(UP_ARROW));
             return;
         }
-        if (keyIsDown(DOWN_ARROW)) {
+        if (keyIsDown(DOWN_ARROW) || touch == 'down') {
             game.moveBomberman(getDirection(DOWN_ARROW));
             return;
         }
-        if (keyIsDown(32)) {
+        if (keyIsDown(32) || touch == 'bomb') {
             game.putBomb();
             return;
         }
