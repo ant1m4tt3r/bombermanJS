@@ -73,6 +73,7 @@ function facebookShare() {
     FB.ui({
         method: 'share',
         mobile_iframe: true,
+        display: 'popup',
         href: 'https://hugoazevedosoares.github.io/bombermanJS/',
         source: 'https://hugoazevedosoares.github.io/bombermanJS/assets/classic.png'
     }, function(response) {});

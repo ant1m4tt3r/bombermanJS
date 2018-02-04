@@ -5,6 +5,8 @@ class Enemy {
         this.pos = { x, y };
         this.isAlive = true;
         this.size = this.game.size;
+        this.timeout = 1000 + random(-300, 100);
+        this.strategy = new AleatoryStrategy(this); // Decide o tipo de estrátegia que será utilizada.
         this.update();
         this.start();
     }
@@ -12,10 +14,14 @@ class Enemy {
     start() {
         this.interval = setInterval(() => {
             if (this.isAlive) {
-                this.aleatoryStrategy();
+                this.runStrategy();
                 this.update();
             }
-        }, 1000);
+        }, this.timeout);
+    }
+
+    runStrategy() {
+        this.strategy.run();
     }
 
     aleatoryStrategy() {
