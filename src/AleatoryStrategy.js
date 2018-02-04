@@ -1,5 +1,9 @@
 class AleatoryStrategy {
 
+    constructor(enemy) {
+        this.enemy = enemy;
+    }
+
     run() {
         let x = this.enemy.pos.x;
         let y = this.enemy.pos.y;
