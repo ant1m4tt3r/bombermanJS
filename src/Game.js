@@ -12,11 +12,11 @@ class Game {
         this.bombs = [];
         this.enemys = [];
         this.imgs = {
-            block: loadImage('assets/block.bmp'),
-            bomb: loadImage('assets/bomb.bmp'),
-            exp_center: loadImage('assets/exp_center.bmp'),
-            exp_horizontal: loadImage('assets/exp_horizontal.bmp'),
-            exp_vertical: loadImage('assets/exp_vertical.bmp'),
+            block: loadImage('assets/block.png'),
+            bomb: loadImage('assets/bomb.png'),
+            exp_center: loadImage('assets/exp_center.png'),
+            exp_horizontal: loadImage('assets/exp_horizontal.png'),
+            exp_vertical: loadImage('assets/exp_vertical.png'),
             game_over: loadImage('assets/game_over.bmp'),
             win: loadImage('assets/win.bmp')
         };

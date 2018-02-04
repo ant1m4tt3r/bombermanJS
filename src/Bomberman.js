@@ -1,8 +1,8 @@
 class Bomberman {
 
     constructor(game) {
-        this.img_right = loadImage('assets/bomberman.bmp');
-        this.img_left = loadImage('assets/bomberman_inverse.bmp');
+        this.img_right = loadImage('assets/bomberman.png');
+        this.img_left = loadImage('assets/bomberman_inverse.png');
         this.img = this.img_right;
         this.pos = { x: 1, y: 1 };
         this.game = game;

@@ -1,6 +1,6 @@
 class Enemy {
     constructor(game, x, y) {
-        this.img = loadImage('assets/enemy.bmp');
+        this.img = loadImage('assets/enemy.png');
         this.game = game;
         this.pos = { x, y };
         this.isAlive = true;
