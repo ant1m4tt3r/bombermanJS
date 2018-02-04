@@ -4,7 +4,7 @@ class Enemy {
         this.game = game;
         this.pos = { x, y };
         this.isAlive = true;
-        this.size = 40;
+        this.size = this.game.size;
         this.update();
         this.start();
     }

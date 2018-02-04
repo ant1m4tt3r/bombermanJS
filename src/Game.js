@@ -1,11 +1,11 @@
 class Game {
 
-    constructor() {
+    constructor(blockSize) {
         this.gameState = 'running';
         this.finish = false;
         this.img = loadImage('assets/background.bmp');
         this.grid = { width: 17, height: 13 }
-        this.size = 40;
+        this.size = blockSize;
         this.bomberman = new Bomberman(this);
         this.exploding = false;
         this.notAllowed = [1, 2, 3];

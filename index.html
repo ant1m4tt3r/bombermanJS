@@ -5,11 +5,16 @@
     <title>Bomberman-JS</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <meta name="viewport" content="user-scalable=no" />
+    <meta property="og:url" content="https://hugoazevedosoares.github.io/bombermanJS/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Bomberman JS" />
+    <meta property="og:description" content="Bomberman Clássico Online" />
+    <meta property="og:image" content="https://hugoazevedosoares.github.io/bombermanJS/assets/classic.png" />
     <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <script language="javascript" type="text/javascript" src="bower_components/p5js/lib/p5.js"></script>
     <!-- uncomment lines below to include extra p5 libraries -->
-    <!--<script language="javascript" src="bower_components/p5js/lib/addons/p5.dom.js"></script>-->
+    <script language="javascript" src="bower_components/p5js/lib/addons/p5.dom.js"></script>
     <!--<script language="javascript" src="bower_components/p5js/lib/addons/p5.sound.js"></script>-->
     <script language="javascript" type="text/javascript" src="src/Bomb.js"></script>
     <script language="javascript" type="text/javascript" src="src/Enemy.js"></script>
@@ -19,7 +24,59 @@
 </head>
 
 <body>
+    <!-- Load Facebook SDK for JavaScript -->
+    <div id="fb-root"></div>
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId: 'your-app-id',
+                xfbml: true,
+                version: 'v2.5'
+            });
+        };
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = 'https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.12&appId=511406032584444&autoLogAppEvents=1';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+    <script type="text/javascript">
+        (function(w, d) {
+            var loader = function() {
+                var s = d.createElement("script"),
+                    tag = d.getElementsByTagName("script")[0];
+                s.src = "//cdn.iubenda.com/iubenda.js";
+                tag.parentNode.insertBefore(s, tag);
+            };
+            if (w.addEventListener) {
+                w.addEventListener("load", loader, false);
+            } else if (w.attachEvent) {
+                w.attachEvent("onload", loader);
+            } else {
+                w.onload = loader;
+            }
+        })(window, document);
+    </script>
+
     <h1>Bomberman em p5.js</h1>
+    <div class="sidebar">
+        <h3>Options</h3>
+        <ul>
+            <li>
+                <a onclick="allowFullSreen()">FullScreen</a>
+            </li>
+            <li>
+                <a onclick="location.reload()">Reload</a>
+            </li>
+            <li>
+                <a onclick="facebookShare()">Compartilhar</a>
+            </li>
+        </ul>
+    </div>
     <div id="controls">
         <div class="uper-row">
             <button class="command" id="up" onclick="commands('up')">U</button>
@@ -34,7 +91,10 @@
         </div>
     </div>
     <div id="credits">
-        <p>By <a href="https://hugoazevedosoares.github.io/" target="_blank">Hugo Azevedo</a></p>
+        <p>By
+            <a href="https://hugoazevedosoares.github.io/" target="_blank">Hugo Azevedo</a> -
+            <a href="//www.iubenda.com/privacy-policy/43044193" title="Privacy Policy">Política de Privacidade</a>
+        </p>
     </div>
 </body>
 
