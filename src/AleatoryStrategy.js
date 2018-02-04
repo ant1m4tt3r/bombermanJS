@@ -1,4 +1,4 @@
-class AleatoryStrategy extends Strategy {
+class AleatoryStrategy {
 
     run() {
         let x = this.enemy.pos.x;
