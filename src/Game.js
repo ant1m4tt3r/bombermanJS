@@ -10,7 +10,18 @@ class Game {
         this.exploding = false;
         this.notAllowed = [1, 2, 3];
         this.bombs = [];
+        this.numBombs = 0;
+        this.maxBombs = 10;
+        this.numEnemys = 3;
+        this.maxEnemys = 3;
         this.enemys = [];
+        this.states = {
+            win: 'win',
+            dead: 'dead',
+            nextPhase: 'next',
+            playing: 'playing'
+        };
+        this.state = '';
         this.imgs = {
             block: loadImage('assets/block.png'),
             bomb: loadImage('assets/bomb.png'),
@@ -42,12 +53,12 @@ class Game {
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
         ];
         this.createEnemys();
+        this.setScoreElements();
     }
 
     isEmptySpace(x, y) {
         return this.maze[y][x] == 0
     }
-
 
     isUsableSpace(x, y) {
         try {
@@ -57,10 +68,15 @@ class Game {
         }
     }
 
+    setScoreElements() {
+        this.bombsLeftElement = select('#bombs-left');
+        this.enemysKilledElement = select('#killed-enemys');
+    }
+
     createEnemys() {
-        this.enemys.push(new Enemy(this, 5, 9));
-        this.enemys.push(new Enemy(this, 11, 11));
-        this.enemys.push(new Enemy(this, 6, 3));
+        this.enemys.push(new Enemy(this, { x: 5, y: 9 }));
+        this.enemys.push(new Enemy(this, { x: 11, y: 11 }));
+        this.enemys.push(new Enemy(this, { x: 6, y: 3 }));
     }
 
     moveBomberman(direction) {
@@ -87,14 +103,23 @@ class Game {
         if (this.isEmptySpace(this.bomberman.pos.x, this.bomberman.pos.y)) {
             this.bombs.push(new Bomb(this.bomberman.pos, this));
             this.maze[this.bomberman.pos.y][this.bomberman.pos.x] = 3;
+            this.numBombs++;
         }
     }
 
     verify(enemysDead) {
         if (enemysDead)
-            this.finishGame('win');
+            this.finishGame(this.states.win);
+        if (this.numBombs > this.maxBombs)
+            this.finishGame(this.states.dead);
         if (![0, 3].includes(this.maze[this.bomberman.pos.y][this.bomberman.pos.x]))
-            this.finishGame('dead');
+            this.finishGame(this.states.dead);
+    }
+
+
+    finishGame(state) {
+        this.state = state;
+        this.finish = true;
     }
 
     drawBlocks() {
@@ -144,36 +169,43 @@ class Game {
     }
 
     drawEnemys() {
-        let allDead = true;
+        let enemyCount = 0;
         for (let i = this.enemys.length - 1; i >= 0; i--) {
             if (this.enemys[i].isAlive) {
                 this.enemys[i].draw();
-                allDead = false;
+                enemyCount++;
             }
             if (this.enemys[i].pos.x == this.bomberman.pos.x &&
                 this.enemys[i].pos.y == this.bomberman.pos.y) {
-                this.finishGame('dead');
+                this.finishGame(this.states.dead);
                 return false;
             }
         }
-        return allDead;
+        this.numEnemys = enemyCount;
+        return enemyCount == 0;
     }
 
-    finishGame(state) {
-        this.state = state;
-        this.finish = true;
+    drawScores() {
+        this.bombsLeftElement.html(this.maxBombs - this.numBombs);
+        this.enemysKilledElement.html(this.maxEnemys - this.numEnemys);
+    }
+
+    drawBomberman() {
+        this.bomberman.draw();
     }
 
     draw() {
+        this.drawScores();
         if (!this.finish) {
             image(this.img, 0, 0, this.size * this.grid.width, this.size * this.grid.height);
             this.drawBlocks();
             this.drawBombs();
+            this.drawScores();
+            this.drawBomberman();
             let enemysDead = this.drawEnemys();
             this.verify(enemysDead);
-            this.bomberman.draw();
         } else {
-            image(this.state === 'win' ? this.imgs.win : this.imgs.game_over, 0, 0, this.size * this.grid.width, this.size * this.grid.height);
+            image(this.state === this.states.win ? this.imgs.win : this.imgs.game_over, 0, 0, this.size * this.grid.width, this.size * this.grid.height);
         }
     }
 

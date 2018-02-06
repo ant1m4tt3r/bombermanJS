@@ -1,12 +1,12 @@
 class Enemy {
-    constructor(game, x, y) {
+    constructor(game, opt) {
         this.img = loadImage('assets/enemy.png');
         this.game = game;
-        this.pos = { x, y };
+        this.pos = { x: opt.x, y: opt.y };
         this.isAlive = true;
         this.size = this.game.size;
         this.timeout = 1000 + random(-300, 100);
-        this.strategy = new AleatoryStrategy(this); // Decide o tipo de estrátegia que será utilizada.
+        this.strategy = opt.strategy || new AleatoryStrategy(this); // Decide o tipo de estrátegia que será utilizada.
         this.update();
         this.start();
     }

@@ -57,7 +57,7 @@
     </script>
 
     <h1>Bomberman em p5.js</h1>
-    <div class="sidebar">
+    <div class="sidebar left">
         <h3>Options</h3>
         <ul>
             <li>
@@ -67,7 +67,21 @@
                 <a onclick="location.reload()">Reload</a>
             </li>
             <li>
-                <a onclick="facebookShare()" href="https://hugoazevedosoares.github.io/bombermanJS/">Compartilhar</a>
+                <a onclick="facebookShare()" href="https://hugoazevedosoares.github.io/bombermanJS/">Share</a>
+            </li>
+        </ul>
+    </div>
+    <div class="sidebar right">
+        <h3>Scores</h3>
+        <ul>
+            <li>Enemys Killed:</li>
+            <li id="killed-enemys">
+                0
+            </li>
+            <li><br></li>
+            <li>Bombs left:</li>
+            <li id="bombs-left">
+                100
             </li>
         </ul>
     </div>
