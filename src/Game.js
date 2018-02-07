@@ -74,9 +74,9 @@ class Game {
     }
 
     createEnemys() {
-        this.enemys.push(new Enemy(this, { x: 5, y: 9 }));
-        this.enemys.push(new Enemy(this, { x: 11, y: 11 }));
-        this.enemys.push(new Enemy(this, { x: 6, y: 3 }));
+        this.enemys.push(new Enemy(this, { x: 5, y: 9, strategy: PseudoStrategy }));
+        this.enemys.push(new Enemy(this, { x: 11, y: 11, strategy: PseudoStrategy }));
+        this.enemys.push(new Enemy(this, { x: 6, y: 3, strategy: PseudoStrategy }));
     }
 
     moveBomberman(direction) {

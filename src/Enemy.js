@@ -1,4 +1,5 @@
 class Enemy {
+
     constructor(game, opt) {
         this.img = loadImage('assets/enemy.png');
         this.game = game;
@@ -6,9 +7,23 @@ class Enemy {
         this.isAlive = true;
         this.size = this.game.size;
         this.timeout = 1000 + random(-300, 100);
-        this.strategy = opt.strategy || new AleatoryStrategy(this); // Decide o tipo de estrátegia que será utilizada.
+        // this.strategy = new st(this) || new AleatoryStrategy(this); // Decide o tipo de estrátegia que será utilizada.
+        this.setStrategy(opt.strategy);
         this.update();
         this.start();
+    }
+
+    setStrategy(opt) {
+        switch (opt) {
+            case PseudoStrategy:
+                this.strategy = new PseudoStrategy(this);
+                break;
+            case AleatoryStrategy:
+                this.strategy = new AleatoryStrategy(this);
+                break;
+            default:
+                this.strategy = new AleatoryStrategy(this);
+        }
     }
 
     start() {
