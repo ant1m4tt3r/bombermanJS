@@ -71,30 +71,6 @@ button {
     width: 220px;
 }
 
-
-/* 
-  ##Device = Laptops, Desktops
-*/
-
-@media (min-width: 1025px) {
-    #controls {
-        display: none;
-    }
-    .sidebar {
-        position: absolute;
-        border: 2px solid black;
-        border-radius: 5px;
-        height: 25vh;
-        padding: 10px;
-    }
-    .sidebar.left {
-        left: 15px;
-    }
-    .sidebar.right {
-        right: 15px;
-    }
-}
-
 .sidebar h3 {
     margin: 0;
     margin-bottom: 15px;
@@ -119,17 +95,42 @@ button {
     border-bottom: 2px solid black;
 }
 
+.sidebar.left {
+    left: 15px;
+}
+
+.sidebar.right {
+    right: 15px;
+}
+
 @media (max-width: 1024px) {
     .sidebar {
         position: absolute;
         bottom: 10%;
         border: 2px solid black;
         border-radius: 5px;
-        height: 10vh;
+        height: 12vh;
         margin: 20px;
         padding: 10px;
-        left: 0;
-        right: 0;
         font-size: 24px;
+        width: 40vw;
+    }
+}
+
+
+/* 
+  ##Device = Laptops, Desktops
+*/
+
+@media (min-width: 1025px) {
+    #controls {
+        display: none;
+    }
+    .sidebar {
+        position: absolute;
+        border: 2px solid black;
+        border-radius: 5px;
+        height: 25vh;
+        padding: 10px;
     }
 }
