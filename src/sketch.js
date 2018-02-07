@@ -4,7 +4,7 @@ var h = window.innerHeight;
 const HORIZONTAL_BLOCKS = 17;
 const VERTICAL_BLOCKS = 13;
 
-const BLOCK_SIZE = w < 720 ? Math.round(w / HORIZONTAL_BLOCKS) : 42;
+const BLOCK_SIZE = w < 1000 ? Math.round(w / HORIZONTAL_BLOCKS) : 42;
 
 const GAME_WIDTH = HORIZONTAL_BLOCKS * BLOCK_SIZE;
 const GAME_HEIGHT = VERTICAL_BLOCKS * BLOCK_SIZE;
