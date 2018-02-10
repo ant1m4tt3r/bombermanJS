@@ -15,9 +15,9 @@ class Enemy {
 
     setStrategy(opt) {
         switch (opt) {
-            case PseudoStrategy:
-                this.strategy = new PseudoStrategy(this);
-                break;
+            // case PseudoStrategy:
+            //     this.strategy = new PseudoStrategy(this);
+            //     break;
             case AleatoryStrategy:
                 this.strategy = new AleatoryStrategy(this);
                 break;
